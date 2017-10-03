@@ -1,0 +1,11 @@
+4 运行下面的命令来 CREATE TABLE 
+第一步 让Django知道要包含books应用。 
+python manage.py makemigrations books 
+通过运行makemigrations告诉Django，已经对模型做了一些更改（在这个例子中，你创建了一个新的模型）并且会将这些更改存储为迁移文件。Django使用迁移文件来保存对模型的更改（即数据库模式的更改）—— 所谓迁移文件其实就是磁盘上的普通文件。 如果愿意，你可以阅读迁移文件来了解新模型； 这个迁移文件就是 books/migrations/0001_initial.py。不用担心，Django不要求你在每次Django生成迁移文件之后都要阅读这些文件，但是它们被设计成可人为编辑的形式，以便你可以手工稍微修改一下Django的某些具体行为。 
+第二步 python manage.py sqlmigrate books 0001 
+第三步 python manage.py migrate
+
+此时数据库创建完毕
+
+
+http://blog.csdn.net/u011109881/article/details/51901032
