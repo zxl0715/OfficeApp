@@ -1,8 +1,11 @@
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib import auth
 from mail import models
 from django.shortcuts import redirect
+
+from django.contrib.auth.middleware import AuthenticationMiddleware
 
 
 # Create your views here.
@@ -24,8 +27,8 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None and user.is_active:
             auth.login(request, user)
-            return redirect('/main', )
-            # return HttpResponseRedirect("/main/")
+            # return redirect('/main', )
+            return HttpResponseRedirect("/main/")
         else:
             return render(request, "login.html", {"status": "用户名或密码错误！"})
             # user_list = models.User.objects.all()
@@ -44,5 +47,8 @@ def logout(request):
 def main(request):
     username = request.COOKIES.get('username', '')
     sessionid = request.COOKIES.get('sessionid', '')
-
+    if request.user.is_authenticated == True:
+        print('已登陆！！')
+    else:
+        print('未登陆！')
     return render(request, 'main.html', {'username': username, 'sessionid': sessionid})
