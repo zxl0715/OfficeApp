@@ -5,6 +5,9 @@
     <title>主页</title>
 </head>
 <body>
-主页
+<form action="/logout/" method="post">
+    主页{{ username }}{{ sessionid }}
+    <input type="submit" value="退出">
+</form>
 </body>
 </html>

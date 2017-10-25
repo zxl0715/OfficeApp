@@ -21,5 +21,6 @@ from mail import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'login/', views.login),
-    path(r'main/',views.main),
+    path(r'logout/', views.logout),
+    path(r'main/', views.main),
 ]
