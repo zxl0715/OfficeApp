@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib import auth
+from django.template.loader import get_template
+
 from mail import models
 from django.shortcuts import redirect
 
@@ -49,6 +51,8 @@ def main(request):
     sessionid = request.COOKIES.get('sessionid', '')
     if request.user.is_authenticated == True:
         print('已登陆！！')
+
+        get_template('test.html')
     else:
         print('未登陆！')
     return render(request, 'main.html', {'username': username, 'sessionid': sessionid})

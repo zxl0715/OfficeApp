@@ -20,6 +20,7 @@ from mail import views
 
 urlpatterns = [
     url(r'^$', views.login),  # 不手动配置网站“根目录”对应“视图函数”的情况
+
     path('admin/', admin.site.urls),
     path(r'login/', views.login),
     path(r'logout/', views.logout),
