@@ -38,12 +38,12 @@
                             <br/>
 
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">收件人：
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="recipients">收件人：
                                     <span class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <input type="text" id="first-name" required="required"
-                                           class="form-control col-md-7 col-xs-12">
+                                    <input type="text" id="recipients" name ="recipients" required="required"
+                                           class="form-control col-md-7 col-xs-12" value="zxl0715@126.com">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -52,15 +52,17 @@
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="text" id="subject" name="subject" required="required"
-                                           class="form-control col-md-7 col-xs-12">
+                                           class="form-control col-md-7 col-xs-12" value="主题python发来的">
                                 </div>
+
+
                             </div>
                             <div class="form-group">
                                 <label for="eamile_content"
                                        class="control-label col-md-3 col-sm-3 col-xs-12">邮件内容：</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                         <span id="editor" name="message" type="text/plain"
-                                              style="width:600px;height:200px;"></span>
+                                              style="width:600px;height:200px;"  ></span>
 
                                 </div>
                             </div>
@@ -76,13 +78,22 @@
 
 
                         </div>
-                        <div class="clearfix"></div>        
+                        <div class="clearfix"></div>
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+
+
                                 <button class="btn btn-primary" type="button">取消</button>
                                 <button class="btn btn-primary" type="reset">存草稿</button>
                                 <button type="submit" class="btn btn-success">发送</button>
+{{ msg }}
+{#                                {% for field in form %}#}
+{#    <div class="fieldWrapper">#}
+{#       {{ field.html_name }} {{ field.errors }}#}
+{#        {{ field.label_tag }} {{ field }}#}
+{#    </div>#}
+{#{% endfor %}#}
                             </div>
                         </div>
 

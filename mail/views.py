@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
+from django.core.mail import send_mail
+from django.http import HttpResponseRedirect, BadHeaderError, HttpResponse
 from django.shortcuts import render
 from django.contrib import auth
 from django.template.loader import get_template
@@ -61,21 +62,40 @@ def main(request):
 
 @login_required
 def wirte_email(request):
+    sand_resutl = False
     if request.method == "POST":
+        # 创建一个表单实例并用来自请求的数据填充它:
         form = SendEmail(request.POST)
+        # 检查是否有效:
         if form.is_valid():
+            # subject = request.POST.get('subject', '')
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            # sender = form.cleaned_data['sender']
+            sender = 'zxl@0715@163.com'  # form.cleaned_data['sender']
             # cc_myself = form.cleaned_data['cc_myself']
-
-            # send_mail(subject, message, sender, recipients)
-            return HttpResponseRedirect('/ok/')
+            recipients = form.cleaned_data['recipients']
+            # 发送邮件
+            if subject and message and sender and recipients:
+                try:
+                    sand_resutl = True
+                    from mail.email_market import send_mail
+                    sand_resutl = send_mail(subject, message, sender, recipients)
+                except Exception as exc:
+                    # http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html
+                    return HttpResponse(exc)
+                    # return HttpResponse('Invalid header found.')
+                # /return HttpResponseRedirect('/ok/')
+                # return HttpResponse({'mes': 'ok'});
+                return render(request, "email/wirte_email.html", {'msg': 'ok'})
+            else:
+                return HttpResponse('Make sure all fields are entered and valid.')
     else:
+        # 如果一个GET(或任何其他方法),我们将创建一个空白表单
         form = SendEmail()
     return render(request, "email/wirte_email.html", {'form': form})
     # return render(request, 'wirte_email.html', {'username': username})
     # return render(request, "email/wirte_email.html")
+
 
 # 发送邮件
 def sendemail(request):
