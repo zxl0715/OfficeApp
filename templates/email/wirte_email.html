@@ -1,6 +1,104 @@
 {% extends "base.html" %}
 {% block title %}写邮件{% endblock %}
+{% block css %}
 
+
+{% endblock %}
 {% block content %}
-33
+
+    <div class="">
+        {#        <div class="page-title">#}
+        {#            <div class="title_left">#}
+        {#                <h3>写邮件</h3>#}
+        {#            </div>#}
+        {#            <div class="title_right">#}
+        {#                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">#}
+        {#                    <div class="input-group">#}
+        {#                        <input type="text" class="form-control" placeholder="Search for...">#}
+        {#                        <span class="input-group-btn">#}
+        {#                      <button class="btn btn-default" type="button">Go!</button>#}
+        {#                    </span>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>写邮件
+                        </h2>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <form id="demo-form2" action="/wirte_email/" method="post" data-parsley-validate
+                          class="form-horizontal form-label-left">
+                        <div class="x_content">
+                            <br/>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">收件人：
+                                    <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="first-name" required="required"
+                                           class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="subject">主题： <span
+                                        class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" id="subject" name="subject" required="required"
+                                           class="form-control col-md-7 col-xs-12">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="eamile_content"
+                                       class="control-label col-md-3 col-sm-3 col-xs-12">邮件内容：</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <span id="editor" name="message" type="text/plain"
+                                              style="width:600px;height:200px;"></span>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12"> <i
+                                        class="fa fa-paperclip"></i> 附件： <span
+                                        class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="file" name="attachment">
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="clearfix"></div>        
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button class="btn btn-primary" type="button">取消</button>
+                                <button class="btn btn-primary" type="reset">存草稿</button>
+                                <button type="submit" class="btn btn-success">发送</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+{% endblock %}
+
+{% block script %}
+    <script src="/static/vendors/ueditor/ueditor.config.js"></script>
+    <script src="/static/vendors/ueditor/ueditor.all.js"></script>
+    <script src="/static/vendors/ueditor/lang/zh-cn/zh-cn.js"></script>
+    <script src="/static/js/wirteemail.js"></script>
 {% endblock %}

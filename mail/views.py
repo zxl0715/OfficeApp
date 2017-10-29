@@ -5,6 +5,7 @@ from django.contrib import auth
 from django.template.loader import get_template
 
 from mail import models
+from .mailForm import SendEmail
 from django.shortcuts import redirect
 
 from django.contrib.auth.middleware import AuthenticationMiddleware
@@ -56,3 +57,32 @@ def main(request):
     else:
         print('未登陆！')
     return render(request, 'main.html', {'username': username, 'sessionid': sessionid})
+
+
+@login_required
+def wirte_email(request):
+    if request.method == "POST":
+        form = SendEmail(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            # sender = form.cleaned_data['sender']
+            # cc_myself = form.cleaned_data['cc_myself']
+
+            # send_mail(subject, message, sender, recipients)
+            return HttpResponseRedirect('/ok/')
+    else:
+        form = SendEmail()
+    return render(request, "email/wirte_email.html", {'form': form})
+    # return render(request, 'wirte_email.html', {'username': username})
+    # return render(request, "email/wirte_email.html")
+
+# 发送邮件
+def sendemail(request):
+    if request.method == "POST":
+        form = SendEmail(request.POST)
+        if form.is_valid():
+            return HttpResponseRedirect('/ok/')
+    else:
+        form = SendEmail()
+    return render(request, "wirte_email.html/", {'form': form})
