@@ -71,7 +71,7 @@ def wirte_email(request):
             # subject = request.POST.get('subject', '')
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            sender = 'zxl@0715@163.com'  # form.cleaned_data['sender']
+            sender = 'zxl0715@163.com'  # form.cleaned_data['sender']
             # cc_myself = form.cleaned_data['cc_myself']
             recipients = form.cleaned_data['recipients']
             # 发送邮件
