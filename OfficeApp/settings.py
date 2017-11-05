@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'mail.apps.MailConfig',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -125,5 +126,9 @@ STATICFILES_DIRS = (
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
-#用户未登录，页面跳转跳转到login页面
+# 用户未登录，页面跳转跳转到login页面
 LOGIN_URL = "/login/"
+#django-crontab
+CRONJOBS = [
+    ('*/5 * * * *', 'mail.cron.my_scheduled_job')
+]
