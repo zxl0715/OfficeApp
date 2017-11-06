@@ -1,4 +1,4 @@
-"""OfficeApp URL Configuration
+"""aspcheduler URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/dev/topics/http/urls/
@@ -15,17 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import *
-from mail import views
 
-# from zxl_job import job
-from zxl_job import  processpool
 urlpatterns = [
-    # url(r'^$', views.login),  # 不手动配置网站“根目录”对应“视图函数”的情况
-
     path('admin/', admin.site.urls),
-    path(r'login/', views.login),
-    path(r'logout/', views.logout),
-    path(r'main/', views.main),
-    path(r'wirte_email/', views.wirte_email),
 ]
