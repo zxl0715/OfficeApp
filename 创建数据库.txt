@@ -1,3 +1,18 @@
+先 cd 进入 manage.py 所在的那个文件夹下，输入下面的命令
+ 
+# Django 1.6.x 及以下
+python manage.py syncdb
+ 
+# Django 1.7 及以上的版本需要用以下命令
+python manage.py makemigrations
+python manage.py migrate
+
+https://code.ziqiangxuetang.com/django/django-models.html
+
+
+
+
+
 4 运行下面的命令来 CREATE TABLE 
 第一步 让Django知道要包含books应用。 ()
 python manage.py makemigrations books 

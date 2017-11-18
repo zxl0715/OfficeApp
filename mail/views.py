@@ -71,15 +71,21 @@ def wirte_email(request):
             # subject = request.POST.get('subject', '')
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            sender = 'zxl0715@163.com'  # form.cleaned_data['sender']
+            # sender = 'zxl0715@163.com'  # form.cleaned_data['sender']
+            sender='gloria@legapower.com'
             # cc_myself = form.cleaned_data['cc_myself']
             recipients = form.cleaned_data['recipients']
             # 发送邮件
             if subject and message and sender and recipients:
                 try:
                     sand_resutl = True
-                    from mail.email_market import send_mail
-                    sand_resutl = send_mail(subject, message, sender, recipients)
+
+                    from mail.email_market import send_mail236
+                    from mail.models import mailContent
+
+                    mailContent.objects.create(mailFrom=sender,mailTo=recipients,mailSubject=subject,mailContent=message)
+
+                    sand_resutl = send_mail236(subject, message, sender, recipients)
                 except Exception as exc:
                     # http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html
                     return HttpResponse(exc)

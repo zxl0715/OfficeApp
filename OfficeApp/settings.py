@@ -125,6 +125,8 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'),)
 
 # 用户未登录，页面跳转跳转到login页面
@@ -133,3 +135,6 @@ LOGIN_URL = "/login/"
 CRONJOBS = [
     ('*/5 * * * *', 'mail.cron.my_scheduled_job')
 ]
+
+
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
