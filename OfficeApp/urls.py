@@ -21,7 +21,7 @@ from mail import views
 # from zxl_job import job
 from zxl_job import  processpool
 urlpatterns = [
-    # url(r'^$', views.login),  # 不手动配置网站“根目录”对应“视图函数”的情况
+    url(r'^$', views.login),  # 不手动配置网站“根目录”对应“视图函数”的情况
 
     path('admin/', admin.site.urls),
     path(r'login/', views.login),

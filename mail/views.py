@@ -1,4 +1,7 @@
+from datetime import datetime, timedelta, timezone
+
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect, BadHeaderError, HttpResponse
 from django.shortcuts import render
@@ -8,7 +11,8 @@ from django.template.loader import get_template
 from mail import models
 from .mailForm import SendEmail
 from django.shortcuts import redirect
-
+from mail.email_market import *
+from mail.models import *
 from django.contrib.auth.middleware import AuthenticationMiddleware
 
 
@@ -62,7 +66,8 @@ def main(request):
 
 @login_required
 def wirte_email(request):
-    sand_resutl = False
+    send_result = True
+    emailUser = None
     if request.method == "POST":
         # 创建一个表单实例并用来自请求的数据填充它:
         form = SendEmail(request.POST)
@@ -71,36 +76,44 @@ def wirte_email(request):
             # subject = request.POST.get('subject', '')
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            # sender = 'zxl0715@163.com'  # form.cleaned_data['sender']
-            sender='gloria@legapower.com'
             # cc_myself = form.cleaned_data['cc_myself']
             recipients = form.cleaned_data['recipients']
+
             # 发送邮件
-            if subject and message and sender and recipients:
+            if subject and message and recipients:
                 try:
-                    sand_resutl = True
+                    try:
+                        emailUser = userMailAddress.objects.get(userID=request.user.id, autoEmailTag=True)
+                    except ObjectDoesNotExist:
+                        print("Either the entry or blog doesn't exist.")
+                        # except MultipleObjectsReturned:
+                        #     print('多条记录满足get() 的查询条件!')
 
-                    from mail.email_market import send_mail236
-                    from mail.models import mailContent
-
-                    mailContent.objects.create(mailFrom=sender,mailTo=recipients,mailSubject=subject,mailContent=message)
-
-                    sand_resutl = send_mail236(subject, message, sender, recipients)
-                except Exception as exc:
-                    # http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html
+                    # 发送邮件
+                    send_result = send_mail(subject, message, recipients, emailUser.email, emailUser.emailPassword,
+                                            emailUser.emailHost, emailUser.emailPort)
+                    if send_result == True:
+                        # 保存发送内容
+                        emailContent.objects.create(emailFrom=emailUser.email, emailTo=recipients,
+                                                    emailSubject=subject, emailContent=message, sendTag=send_result,
+                                                    sendTime=datetime.now(),
+                                                    userID=emailUser.userID).save()
+                except Exception as exc:  # 异常信息： http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html
                     return HttpResponse(exc)
-                    # return HttpResponse('Invalid header found.')
-                # /return HttpResponseRedirect('/ok/')
-                # return HttpResponse({'mes': 'ok'});
-                return render(request, "email/wirte_email.html", {'msg': 'ok'})
-            else:
-                return HttpResponse('Make sure all fields are entered and valid.')
-    else:
-        # 如果一个GET(或任何其他方法),我们将创建一个空白表单
+            # return HttpResponse('Invalid header found.')
+            # /return HttpResponseRedirect('/ok/')
+            # return HttpResponse({'mes': 'ok'});
+            return render(request, "email/wirte_email.html", {'msg': 'ok'})
+        else:
+            return HttpResponse('Make sure all fields are entered and valid.')
+
+    else:  # 如果一个GET(或任何其他方法),我们将创建一个空白表单
         form = SendEmail()
     return render(request, "email/wirte_email.html", {'form': form})
-    # return render(request, 'wirte_email.html', {'username': username})
-    # return render(request, "email/wirte_email.html")
+
+
+# return render(request, 'wirte_email.html', {'username': username})
+# return render(request, "email/wirte_email.html")
 
 
 # 发送邮件
