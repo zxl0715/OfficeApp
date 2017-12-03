@@ -90,6 +90,8 @@ def wirte_email(request):
                         #     print('多条记录满足get() 的查询条件!')
 
                     # 发送邮件
+                    #追加计数
+                    message += '<img src="http://count.knowsky.com/count1/count.asp?id=93888&sx=1&ys=43" title="0" alt="0"/>'
                     send_result = send_mail(subject, message, recipients, emailUser.email, emailUser.emailPassword,
                                             emailUser.emailHost, emailUser.emailPort)
                     if send_result == True:
