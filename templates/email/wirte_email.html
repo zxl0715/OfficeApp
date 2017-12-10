@@ -32,7 +32,7 @@
 
                         <div class="clearfix"></div>
                     </div>
-                    <form id="demo-form2" action="/wirte_email/" method="post" data-parsley-validate
+                    <form id="demo-form2"  enctype="multipart/form-data"  action="/wirte_email/" method="post" data-parsley-validate
                           class="form-horizontal form-label-left">
                         <div class="x_content">
                             <br/>
@@ -70,6 +70,12 @@
                                         class="required">*</span>
                                 </label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="file" name="attachment">
+                                </div>
+                                 <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="file" name="attachment">
+                                </div>
+                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                     <input type="file" name="attachment">
                                 </div>
                             </div>

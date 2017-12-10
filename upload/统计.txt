@@ -1,0 +1,15 @@
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8d6d86649a4097a318e0e26c3c535648";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+6402680Baidu
+
+
+<!-- start http://count.knowsky.com -->
+<script src="http://count.knowsky.com/count1/count.asp?id=93888&sx=1&ys=43" language="JavaScript" charset="gb2312"></script>
+<!-- Powered by http://www.knowsky.com -->

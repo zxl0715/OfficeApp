@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta, timezone
 
+import os
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.core.mail import send_mail
@@ -70,6 +71,8 @@ def wirte_email(request):
     emailUser = None
     if request.method == "POST":
         # 创建一个表单实例并用来自请求的数据填充它:
+        # assert False#添加断言
+        attFile=upload_files(request, "attachment")
         form = SendEmail(request.POST)
         # 检查是否有效:
         if form.is_valid():
@@ -90,9 +93,9 @@ def wirte_email(request):
                         #     print('多条记录满足get() 的查询条件!')
 
                     # 发送邮件
-                    #追加计数
-                    message += '<img src="http://count.knowsky.com/count1/count.asp?id=93888&sx=1&ys=43" title="0" alt="0"/>'
-                    send_result = send_mail(subject, message, recipients, emailUser.email, emailUser.emailPassword,
+                    # 追加计数
+                    message += '<img src="http://count.knowsky.com/count1/count.asp?id=93888&sx=1&ys=43" width="0" height="0"/>'
+                    send_result = send_mail(subject, message, attFile,recipients, emailUser.email, emailUser.emailPassword,
                                             emailUser.emailHost, emailUser.emailPort)
                     if send_result == True:
                         # 保存发送内容
@@ -127,3 +130,32 @@ def sendemail(request):
     else:
         form = SendEmail()
     return render(request, "wirte_email.html/", {'form': form})
+
+# TODO:上传1个附件，返回文件名
+def upload_file(request, fileName):
+    if request.method == "POST":
+        myFile = request.FILES.get(fileName, None)
+        if not myFile:
+            return None
+            # pass
+        destination = open(os.path.join("upload", myFile.name), 'wb+')
+        for chunk in myFile.chunks():
+            destination.write(chunk)
+        destination.close()
+    return myFile.name
+
+# TODO:上传多个附件，返回文件名名列表
+def upload_files(request, fileName):
+    fileList=[]
+    if request.method == "POST":
+        myFiles = request.FILES.getlist('attachment')
+        if not myFiles:
+            return None
+            # pass
+        for myFile in myFiles:
+            fileList.append(myFile.name)
+            destination = open(os.path.join("upload", myFile.name), 'wb+')
+            for chunk in myFile.chunks():
+                destination.write(chunk)
+            destination.close()
+    return fileList
