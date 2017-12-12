@@ -72,7 +72,7 @@ def wirte_email(request):
     if request.method == "POST":
         # 创建一个表单实例并用来自请求的数据填充它:
         # assert False#添加断言
-        attFile=upload_files(request, "attachment")
+        attFile = upload_files(request, "attachment")
         form = SendEmail(request.POST)
         # 检查是否有效:
         if form.is_valid():
@@ -95,14 +95,21 @@ def wirte_email(request):
                     # 发送邮件
                     # 追加计数
                     message += '<img src="http://count.knowsky.com/count1/count.asp?id=93888&sx=1&ys=43" width="0" height="0"/>'
-                    send_result = send_mail(subject, message, attFile,recipients, emailUser.email, emailUser.emailPassword,
+                    send_result = send_mail(subject, message, attFile, recipients, emailUser.email,
+                                            emailUser.emailPassword,
                                             emailUser.emailHost, emailUser.emailPort)
                     if send_result == True:
                         # 保存发送内容
-                        emailContent.objects.create(emailFrom=emailUser.email, emailTo=recipients,
-                                                    emailSubject=subject, emailContent=message, sendTag=send_result,
-                                                    sendTime=datetime.now(),
-                                                    userID=emailUser.userID).save()
+                        emailContentObject = emailContent.objects.create(emailFrom=emailUser.email, emailTo=recipients,
+                                                                         emailSubject=subject, emailContent=message,
+                                                                         sendTag=send_result,
+                                                                         sendTime=datetime.now(),
+                                                                         userID=emailUser.userID)
+                        emailContentObject.save()
+                        for fileName in attFile:
+                            emaileAttachment.objects.create(emailFrom=emailUser.email, contentID=emailContentObject.id,
+                                                            attFileName=fileName).save()
+
                 except Exception as exc:  # 异常信息： http://help.163.com/09/1224/17/5RAJ4LMH00753VB8.html
                     return HttpResponse(exc)
             # return HttpResponse('Invalid header found.')
@@ -131,6 +138,7 @@ def sendemail(request):
         form = SendEmail()
     return render(request, "wirte_email.html/", {'form': form})
 
+
 # TODO:上传1个附件，返回文件名
 def upload_file(request, fileName):
     if request.method == "POST":
@@ -144,9 +152,10 @@ def upload_file(request, fileName):
         destination.close()
     return myFile.name
 
+
 # TODO:上传多个附件，返回文件名名列表
 def upload_files(request, fileName):
-    fileList=[]
+    fileList = []
     if request.method == "POST":
         myFiles = request.FILES.getlist('attachment')
         if not myFiles:
